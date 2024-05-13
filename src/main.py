@@ -3,7 +3,7 @@ from typing import Union
 from fastapi import FastAPI
 
 app = FastAPI()
-password = 123
+token = "dkabsd123123"
 
 @app.get("/")
 def read_root():
