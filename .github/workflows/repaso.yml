@@ -12,23 +12,23 @@ on:
 
 jobs:
 
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   name: Lint con Flake 8
-  #   steps:
-  #     - name: Check out source repository
-  #       uses: actions/checkout@v3
-  #     - name: Set up Python environment
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: "3.11"
-  #     - name: flake8 Lint
-  #       uses: py-actions/flake8@v2
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint con Flake 8
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v3
+      - name: Set up Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
 
   build:
     name: Docker build and push
     runs-on: ubuntu-latest
-    # needs: lint
+    needs: lint
     steps:
       - uses: actions/checkout@v2
           
@@ -63,14 +63,14 @@ jobs:
             docker rmi aurii/repaso
             docker run -d -p 80:8000 --name web aurii/repaso
 
-  # health_check_job:
-  #   runs-on: ubuntu-latest
-  #   name: Check for status 200 and title text "lokerse.dev"
-  #   needs: aws
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - id: test
-  #       uses: johnlokerse/website-healthcheck@v2
-  #       with:
-  #         web-url: "http://3.85.30.237/"
-  #         scan-for-text: "Hello from Flask App!"
+  health_check_job:
+    runs-on: ubuntu-latest
+    name: Check for status 200 and title text "lokerse.dev"
+    needs: aws
+    steps:
+      - uses: actions/checkout@v2
+      - id: test
+        uses: johnlokerse/website-healthcheck@v2
+        with:
+          web-url: "http://3.85.30.237/"
+          scan-for-text: "Auri"
